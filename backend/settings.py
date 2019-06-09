@@ -60,6 +60,9 @@ INSTALLED_APPS = [
 
     # sentry
     "raven.contrib.django.raven_compat",
+
+    # apps
+    "backend.users",
 ]
 
 SITE_ID = 1
