@@ -63,6 +63,7 @@ INSTALLED_APPS = [
 
     # apps
     "backend.users",
+    "backend.favorites"
 ]
 
 SITE_ID = 1
