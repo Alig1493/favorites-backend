@@ -1,6 +1,5 @@
 import ast
 
-import pytest
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from django.contrib.contenttypes.models import ContentType
 
@@ -9,10 +8,6 @@ from backend.favorites.tests.factories import CategoryFactory, FavoriteFactory
 
 
 class TestAuditLogs:
-
-    @pytest.fixture
-    def favorite(self):
-        return FavoriteFactory()
 
     def test_audit_log_creation(self, favorite):
         log_entry = LogEntry.objects.filter(

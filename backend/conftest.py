@@ -1,7 +1,13 @@
 import pytest
 from rest_framework.test import APIClient
 
+from backend.favorites.tests.factories import FavoriteFactory
 from backend.users.tests.factories import UserFactory
+
+
+@pytest.fixture(autouse=True)
+def enable_db_access(db):
+    pass
 
 
 @pytest.fixture
@@ -10,7 +16,7 @@ def client():
 
 
 @pytest.fixture
-def user(db):
+def user():
     return UserFactory()
 
 
@@ -20,6 +26,6 @@ def auth_client(user, client):
     return client
 
 
-@pytest.fixture(autouse=True)
-def enable_db_access(db):
-    pass
+@pytest.fixture
+def favorite(user):
+    return FavoriteFactory(user=user)
