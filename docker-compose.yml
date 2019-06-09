@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+
+  web:
+    build: .
+    volumes:
+      - ./media:/media
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      # Django settings overrides:
+      - ALLOWED_HOSTS=*
+      - DEBUG=True
+      - DATABASE_URL=postgres://backend:backend@db:5432/backend_database
+    command: >
+      bash -c "urlwait &&
+               ./manage.py migrate &&
+               ./manage.py runserver 0.0.0.0:8000"
+
+    ports:
+      - "8000:8000"
+
+  db:
+    image: postgres:10.1
+    environment:
+      - POSTGRES_USER=${DATABASE_USER:-backend}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:-backend}
+      - POSTGRES_DB=backend_database
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - db:/var/lib/postgresql/data/pgdata
+
+volumes:
+    db:
