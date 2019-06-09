@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import JSONField
+from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
 from django.db import models
+from django.db.models import F
 
 from backend.base.mixins.models import ModelDiffMixin
 from backend.base.models import LogBase
@@ -25,4 +27,18 @@ class Favorite(ModelDiffMixin, LogBase):
                                    ])
 
     class Meta:
-        unique_together = ("ranking", "category")
+        unique_together = ["ranking", "category"]
+
+    def adjust_category_ranking(self):
+        self._meta.default_manager.filter(
+            category=self.category,
+            ranking__gte=self.ranking
+        ).update(ranking=F("ranking") + 1)
+
+    def save(self, *args, **kwargs):
+        try:
+            self.validate_unique()
+        except ValidationError:
+            self.adjust_category_ranking()
+
+        super().save(*args, **kwargs)
