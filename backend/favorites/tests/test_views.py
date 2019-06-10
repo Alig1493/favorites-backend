@@ -8,18 +8,6 @@ from backend.favorites.tests.factories import FavoriteFactory, CategoryFactory
 from backend.users.tests.factories import UserFactory
 
 
-class TestCreateCategory:
-    url = reverse("v1:favorites:category_create")
-
-    def test_create_category(self, auth_client):
-        category_data = factory.build(dict, FACTORY_CLASS=CategoryFactory)
-
-        response = auth_client.post(self.url, data=category_data)
-
-        assert response.status_code == 201
-        assert Category.objects.filter(title__iexact=category_data.get("title")).count() == 1
-
-
 class TestFavoriteListCreate:
 
     url = reverse("v1:favorites:list_create")
@@ -52,7 +40,7 @@ class TestFavoriteListCreate:
     def test_post_favourites(self, user, auth_client):
         category = CategoryFactory()
         favorite_data = factory.build(dict, FACTORY_CLASS=FavoriteFactory,
-                                      user=user.id, category=category.id,
+                                      user=user.id, category=category.title,
                                       metadata=self.metadata)
         response = auth_client.post(self.url, data=favorite_data, format="json")
 
@@ -64,12 +52,28 @@ class TestFavoriteListCreate:
                                        metadata=self.metadata
                                        ).count() == 1
 
+    def test_post_favorites_new_category(self, user, auth_client):
+        category_title = "New category"
+        favorite_data = factory.build(dict, FACTORY_CLASS=FavoriteFactory,
+                                      user=user.id, category=category_title,
+                                      metadata=self.metadata)
+        response = auth_client.post(self.url, data=favorite_data, format="json")
+
+        assert response.status_code == 201
+        assert Category.objects.filter(title__iexact=category_title).count() == 1
+        assert Favorite.objects.filter(user_id=user.id,
+                                       category__title__iexact=category_title,
+                                       ranking__exact=favorite_data.get("ranking"),
+                                       title=favorite_data.get("title"),
+                                       metadata=self.metadata
+                                       ).count() == 1
+
     def test_post_duplicate_category_ranking(self, user, favorite, auth_client):
         category = favorite.category
         ranking = favorite.ranking
 
         favorite_data = factory.build(dict, FACTORY_CLASS=FavoriteFactory,
-                                      user=user.id, category=category.id,
+                                      user=user.id, category=category.title,
                                       ranking=ranking)
 
         response = auth_client.post(self.url, data=favorite_data, format="json")
@@ -133,7 +137,7 @@ class TestFavoriteRetrieveUpdate:
             "ranking": favorite.ranking,
             "title": favorite.title,
             "description": description,
-            "category": favorite.category_id
+            "category": favorite.category.title
         }
 
         expected_change_message = {
@@ -170,3 +174,14 @@ class TestFavoriteRetrieveUpdate:
             object_id=favorite.id,
             action_flag=CHANGE
         ).change_message == str(expected_change_message)
+
+    def test_patch_new_category(self, favorite, auth_client, url):
+        category_title = "cat"
+        response = auth_client.patch(url, data={"category": category_title}, format="json")
+
+        assert response.status_code == 200
+        assert Category.objects.filter(title__iexact=category_title).count() == 1
+
+        favorite.refresh_from_db()
+
+        assert favorite.category_id == Category.objects.get(title__iexact=category_title).id
