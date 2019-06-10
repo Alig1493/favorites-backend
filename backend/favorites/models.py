@@ -2,7 +2,6 @@ from django.contrib.admin.models import LogEntry
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import JSONField
-from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.db.models import F
@@ -31,9 +30,6 @@ class Favorite(ModelDiffMixin, LogBase):
                                        MinLengthValidator(10, message="Must be at least 10 characters long.")
                                    ])
 
-    class Meta:
-        unique_together = ["ranking", "category"]
-
     def __str__(self):
         return f"{self.title}-{self.ranking}"
 
@@ -42,8 +38,15 @@ class Favorite(ModelDiffMixin, LogBase):
             content_type_id=ContentType.objects.get_for_model(self).pk,
             object_id=self.id
         )
+        changes = log_entry.values_list("change_message", flat=True)
 
-        return log_entry.values_list("change_message", flat=True)
+        return list(changes)
+
+    def validate_unique_category_ranking(self):
+        return self._meta.default_manager.filter(
+            category=self.category,
+            ranking=self.ranking
+        ).exists()
 
     def adjust_category_ranking(self):
         self._meta.default_manager.filter(
@@ -52,9 +55,7 @@ class Favorite(ModelDiffMixin, LogBase):
         ).update(ranking=F("ranking") + 1)
 
     def save(self, *args, **kwargs):
-        try:
-            self.validate_unique()
-        except ValidationError:
+        if self.validate_unique_category_ranking():
             self.adjust_category_ranking()
 
         super().save(*args, **kwargs)

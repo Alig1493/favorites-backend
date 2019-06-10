@@ -5,5 +5,5 @@ from backend.favorites.views import FavoriteListCreate
 app_name = "favorites"
 
 urlpatterns = [
-    path("", FavoriteListCreate.as_view(), name="list")
+    path("", FavoriteListCreate.as_view(), name="list_create")
 ]
