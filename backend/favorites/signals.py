@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from backend.favorites.models import Favorite
+from .models import Favorite
 
 
 @receiver(post_save, sender=Favorite)

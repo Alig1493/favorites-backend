@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from backend.favorites.models import Category, Favorite
+from .models import Category, Favorite
 
 
 class FavoriteSerializer(serializers.ModelSerializer):

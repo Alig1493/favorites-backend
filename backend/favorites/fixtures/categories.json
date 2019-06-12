@@ -1,0 +1,23 @@
+[
+  {
+    "model": "favorites.category",
+    "pk": 1,
+    "fields": {
+      "title": "person"
+    }
+  },
+  {
+    "model": "favorites.category",
+    "pk": 2,
+    "fields": {
+      "title": "place"
+    }
+  },
+  {
+    "model": "favorites.category",
+    "pk": 3,
+    "fields": {
+      "title": "food"
+    }
+  }
+]

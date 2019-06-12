@@ -9,6 +9,7 @@ from django.db.models import F
 from backend.base.mixins.models import ModelDiffMixin
 from backend.base.models import LogBase
 
+
 User = get_user_model()
 
 
@@ -57,5 +58,6 @@ class Favorite(ModelDiffMixin, LogBase):
     def save(self, *args, **kwargs):
         if self.validate_unique_category_ranking():
             self.adjust_category_ranking()
+        self.full_clean()
 
         super().save(*args, **kwargs)

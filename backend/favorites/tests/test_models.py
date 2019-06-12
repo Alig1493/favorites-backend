@@ -1,7 +1,10 @@
 import ast
 
+import pytest
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
+from factory.fuzzy import FuzzyText
 
 from backend.favorites.models import Favorite
 from backend.favorites.tests.factories import CategoryFactory, FavoriteFactory
@@ -56,3 +59,16 @@ class TestRanking:
         FavoriteFactory.create_batch(2, ranking=1)
 
         assert Favorite.objects.filter(ranking__exact=1).count() == 2
+
+
+class TestDescription:
+
+    def test_description_minimum_length_success(self):
+        fuzzy_text = FuzzyText(length=10).fuzz()
+        assert FavoriteFactory(description=fuzzy_text)
+
+    def test_description_minimum_length_failure(self):
+        fuzzy_text = FuzzyText(length=9).fuzz()
+        with pytest.raises(ValidationError) as validation_error:
+            FavoriteFactory(description=fuzzy_text)
+        assert validation_error.value.message_dict == {"description": ["Must be at least 10 characters long."]}

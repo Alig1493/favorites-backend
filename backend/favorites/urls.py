@@ -1,6 +1,6 @@
 from django.urls import path
 
-from backend.favorites.views import FavoriteListCreate, FavoriteRetrieveUpdate
+from .views import FavoriteListCreate, FavoriteRetrieveUpdate
 
 app_name = "favorites"
 
