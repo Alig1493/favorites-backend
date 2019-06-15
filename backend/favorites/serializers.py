@@ -3,6 +3,13 @@ from rest_framework import serializers
 from .models import Category, Favorite
 
 
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ["title"]
+
+
 class FavoriteSerializer(serializers.ModelSerializer):
 
     logs = serializers.JSONField(source="get_audit_log_change_list", read_only=True)

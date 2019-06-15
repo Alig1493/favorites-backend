@@ -1,8 +1,14 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from .models import Favorite
-from .serializers import FavoriteSerializer
+from .models import Favorite, Category
+from .serializers import FavoriteSerializer, CategorySerializer
+
+
+class CategoryListView(ListAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
 
 
 class BaseFavoriteView:

@@ -61,6 +61,9 @@ INSTALLED_APPS = [
     # sentry
     "raven.contrib.django.raven_compat",
 
+    # cors
+    "corsheaders",
+
     # apps
     "backend.users",
     "backend.favorites"
@@ -71,6 +74,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -165,6 +169,7 @@ RAVEN_CONFIG = {
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication"
     ),
 }
 
@@ -173,3 +178,6 @@ REST_USE_JWT = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
 OLD_PASSWORD_FIELD_ENABLED = True
 ACCOUNT_LOGOUT_ON_GET = False
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
