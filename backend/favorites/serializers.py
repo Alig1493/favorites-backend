@@ -17,7 +17,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Favorite
-        exclude = []
+        exclude = ["user"]
 
     def create(self, validated_data):
         category_title = validated_data.pop("category")

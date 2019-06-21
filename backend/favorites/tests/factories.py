@@ -13,7 +13,6 @@ class CategoryFactory(factory.DjangoModelFactory):
 
 
 class FavoriteFactory(factory.DjangoModelFactory):
-    user = factory.SubFactory(UserFactory)
     title = factory.Faker("word")
     ranking = FuzzyInteger(low=1, high=10)
     category = factory.SubFactory(CategoryFactory)

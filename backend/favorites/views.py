@@ -20,8 +20,12 @@ class BaseFavoriteView:
 
 
 class FavoriteListCreate(BaseFavoriteView, ListCreateAPIView):
-    pass
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class FavoriteRetrieveUpdate(BaseFavoriteView, RetrieveUpdateAPIView):
-    pass
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)

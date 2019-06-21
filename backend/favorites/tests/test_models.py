@@ -48,27 +48,26 @@ class TestAuditLogs:
 
 class TestRanking:
 
-    def test_same_category_ranking(self):
+    def test_same_category_ranking(self, user):
         category = CategoryFactory()
-        FavoriteFactory.create_batch(2, category=category, ranking=1)
+        FavoriteFactory.create_batch(2, user=user, category=category, ranking=1)
 
         assert Favorite.objects.get(category=category, ranking__exact=1)
         assert Favorite.objects.get(category=category, ranking__exact=2)
 
-    def test_different_category_ranking(self):
-        FavoriteFactory.create_batch(2, ranking=1)
-
+    def test_different_category_ranking(self, user):
+        FavoriteFactory.create_batch(2, user=user, ranking=1)
         assert Favorite.objects.filter(ranking__exact=1).count() == 2
 
 
 class TestDescription:
 
-    def test_description_minimum_length_success(self):
+    def test_description_minimum_length_success(self, user):
         fuzzy_text = FuzzyText(length=10).fuzz()
-        assert FavoriteFactory(description=fuzzy_text)
+        assert FavoriteFactory(user=user, description=fuzzy_text)
 
-    def test_description_minimum_length_failure(self):
+    def test_description_minimum_length_failure(self, user):
         fuzzy_text = FuzzyText(length=9).fuzz()
         with pytest.raises(ValidationError) as validation_error:
-            FavoriteFactory(description=fuzzy_text)
+            FavoriteFactory(user=user, description=fuzzy_text)
         assert validation_error.value.message_dict == {"description": ["Must be at least 10 characters long."]}

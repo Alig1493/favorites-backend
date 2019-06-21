@@ -33,14 +33,13 @@ class TestFavoriteListCreate:
         assert data.get("category") == favorite.category.title
         assert data.get("title") == favorite.title
         assert data.get("ranking") == favorite.ranking
-        assert data.get("user") == favorite.user_id
         assert not data.get("metadata")
         assert data.get("logs") == [""]
 
     def test_post_favourites(self, user, auth_client):
         category = CategoryFactory()
         favorite_data = factory.build(dict, FACTORY_CLASS=FavoriteFactory,
-                                      user=user.id, category=category.title,
+                                      category=category.title,
                                       metadata=self.metadata)
         response = auth_client.post(self.url, data=favorite_data, format="json")
 
@@ -55,7 +54,7 @@ class TestFavoriteListCreate:
     def test_post_favorites_new_category(self, user, auth_client):
         category_title = "New category"
         favorite_data = factory.build(dict, FACTORY_CLASS=FavoriteFactory,
-                                      user=user.id, category=category_title,
+                                      category=category_title,
                                       metadata=self.metadata)
         response = auth_client.post(self.url, data=favorite_data, format="json")
 
@@ -73,7 +72,7 @@ class TestFavoriteListCreate:
         ranking = favorite.ranking
 
         favorite_data = factory.build(dict, FACTORY_CLASS=FavoriteFactory,
-                                      user=user.id, category=category.title,
+                                      category=category.title,
                                       ranking=ranking)
 
         response = auth_client.post(self.url, data=favorite_data, format="json")
@@ -133,7 +132,6 @@ class TestFavoriteRetrieveUpdate:
         description = "loren ipsum"
 
         favorite_data = {
-            "user": favorite.user_id,
             "ranking": favorite.ranking,
             "title": favorite.title,
             "description": description,
