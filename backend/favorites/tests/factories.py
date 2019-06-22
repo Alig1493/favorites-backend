@@ -2,7 +2,6 @@ import factory
 from factory.fuzzy import FuzzyInteger
 
 from backend.favorites.models import Category, Favorite
-from backend.users.tests.factories import UserFactory
 
 
 class CategoryFactory(factory.DjangoModelFactory):

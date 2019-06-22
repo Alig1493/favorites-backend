@@ -31,3 +31,16 @@ class FavoriteSerializer(serializers.ModelSerializer):
             category, created = Category.objects.get_or_create(title=category_title)
             instance.category = category
         return super().update(instance, validated_data)
+
+
+class CategorizedFavoriteSerializer(CategorySerializer):
+    favorite_things = serializers.SerializerMethodField()
+
+    class Meta(CategorySerializer.Meta):
+        fields = ["title", "favorite_things"]
+
+    def get_favorite_things(self, instance):
+        user = self.context.get("request").user
+        queryset = Favorite.objects.filter(category=instance, user=user).order_by("ranking")
+        serializer = FavoriteSerializer(instance=queryset, many=True)
+        return serializer.data

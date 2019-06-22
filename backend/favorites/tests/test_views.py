@@ -28,13 +28,15 @@ class TestFavoriteListCreate:
         assert response.status_code == 200
 
         data = response.data.pop()
+        favorite_data = data.get("favorite_things").pop()
 
-        assert data.get("id") == favorite.id
-        assert data.get("category") == favorite.category.title
-        assert data.get("title") == favorite.title
-        assert data.get("ranking") == favorite.ranking
-        assert not data.get("metadata")
-        assert data.get("logs") == [""]
+        assert favorite_data.get("id") == favorite.id
+        assert data.get("title") == favorite_data.get("category")
+        assert favorite_data.get("category") == favorite.category.title
+        assert favorite_data.get("title") == favorite.title
+        assert favorite_data.get("ranking") == favorite.ranking
+        assert not favorite_data.get("metadata")
+        assert favorite_data.get("logs") == [""]
 
     def test_post_favourites(self, user, auth_client):
         category = CategoryFactory()

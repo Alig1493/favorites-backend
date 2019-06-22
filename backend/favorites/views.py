@@ -2,7 +2,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, Li
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .models import Favorite, Category
-from .serializers import FavoriteSerializer, CategorySerializer
+from .serializers import FavoriteSerializer, CategorySerializer, CategorizedFavoriteSerializer
 
 
 class CategoryListView(ListAPIView):
@@ -16,10 +16,18 @@ class BaseFavoriteView:
     serializer_class = FavoriteSerializer
 
     def get_queryset(self):
-        return Favorite.objects.filter(user=self.request.user)
+        return Favorite.objects.filter(user=self.request.user).order_by("ranking")
 
 
 class FavoriteListCreate(BaseFavoriteView, ListCreateAPIView):
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return CategorizedFavoriteSerializer
+        return super().get_serializer_class()
+
+    def get_queryset(self):
+        return Category.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

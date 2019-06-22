@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+import datetime
 import os
 
 import dj_database_url
@@ -174,6 +174,10 @@ REST_FRAMEWORK = {
 }
 
 REST_USE_JWT = True
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
+}
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 OLD_PASSWORD_FIELD_ENABLED = True

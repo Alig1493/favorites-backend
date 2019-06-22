@@ -21,7 +21,7 @@ from rest_framework.documentation import include_docs_urls
 
 api_v1_urlpatterns = ([
     path("auth/", include("backend.users.urls", namespace="users")),
-    path("favorite/", include("backend.favorites.urls", namespace="favorites")),
+    path("favorites/", include("backend.favorites.urls", namespace="favorites")),
 ], "backend_auth_urls")
 
 urlpatterns = [
