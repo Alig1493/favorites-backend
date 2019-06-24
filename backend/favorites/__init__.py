@@ -1,1 +1,1 @@
-default_app_config = 'backend.favorites.apps.FavoritesConfig'
+default_app_config = "backend.favorites.apps.FavoritesConfig"

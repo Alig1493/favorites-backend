@@ -176,12 +176,13 @@ REST_FRAMEWORK = {
 REST_USE_JWT = True
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
+    "JWT_EXPIRATION_DELTA": datetime.timedelta(days=2),
 }
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 OLD_PASSWORD_FIELD_ENABLED = True
 ACCOUNT_LOGOUT_ON_GET = False
 
-CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = config("CORS_ORIGIN_WHITELIST",
+                               default="http://localhost:8080", cast=Csv())
