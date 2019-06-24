@@ -25,7 +25,7 @@ api_v1_urlpatterns = ([
 ], "backend_auth_urls")
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("", admin.site.urls),
     path("api/v1/", include(api_v1_urlpatterns, namespace="v1")),
     path("docs/", include_docs_urls(title="backend API")),
 ]
