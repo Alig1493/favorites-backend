@@ -10,6 +10,10 @@ libraries and functionality that are present but unused in this project.
 I chose to use this cookie cutter for rapid development and deployment 
 purposes.
 
+Also would prefer to use [djang-dirty-fields](https://github.com/romgar/django-dirtyfields)
+to track my model field changes, since my applied `ModelDiffMixin` might 
+not cover most cases of state changes.
+
 ## Database Entity Relationship of models
 ![Favorite Things ER](favorite_things.png?raw=true "Favorite things ER")
 
