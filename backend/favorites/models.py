@@ -1,6 +1,4 @@
-from django.contrib.admin.models import LogEntry
 from django.contrib.auth import get_user_model
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import JSONField
 from django.core.validators import MinLengthValidator
 from django.db import models
