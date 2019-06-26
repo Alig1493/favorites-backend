@@ -22,7 +22,8 @@ class BaseFavoriteView:
 class FavoriteListCreate(BaseFavoriteView, ListCreateAPIView):
 
     def get_serializer_class(self):
-        if getattr(self.request, "method", "GET"):
+        method = getattr(self.request, "method", "")
+        if method == "GET":
             return CategorizedFavoriteSerializer
         return super().get_serializer_class()
 
