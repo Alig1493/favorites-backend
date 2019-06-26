@@ -2,6 +2,13 @@ Favorite Things Backend
 ======
 *A backend app to help keep track of your favorite things!*
 
+## Disclaimer
+This project has been built by using our custom [cookie-cutter](https://github.com/mashrikt/cookiecutter-django-dokku)
+project that was built overtime in our careers. This is still a work in 
+progress and having used this might mean there are a few extra 
+libraries and functionality that are present but unused in this project.
+I chose to use this cookie cutter for rapid development and deployment 
+purposes.
 
 ## Database Entity Relationship of models
 ![Favorite Things ER](favorite_things.png?raw=true "Favorite things ER")
