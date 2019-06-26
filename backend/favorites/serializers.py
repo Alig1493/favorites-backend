@@ -1,5 +1,4 @@
 from django.contrib.admin.models import LogEntry, CHANGE
-from django.contrib.contenttypes.models import ContentType
 from rest_framework import serializers
 
 from .models import Category, Favorite
@@ -24,9 +23,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
     def get_logs(self, instance):
         log_entry = LogEntry.objects.filter(
             action_flag=CHANGE,
-            content_type_id=ContentType.objects.get_for_model(instance).pk,
             object_id=instance.id,
-            object_repr=instance.title,
         )
         changes = log_entry.values_list("change_message", flat=True)
 

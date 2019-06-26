@@ -26,7 +26,6 @@ changes. I took this approach because I thought it better to use
 something django already provides. This will also allow us
 to query for changes on a specific date. The change message stores
 the favorite field value model object changes.
-* Log(audit_log) only shows the latest changes
 
 (P.S: I think it might have been better to create another 
 model based off of the LogEntry model for logging our model
