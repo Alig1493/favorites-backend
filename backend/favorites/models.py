@@ -38,15 +38,6 @@ class Favorite(ModelDiffMixin, LogBase):
     def __str__(self):
         return f"{self.title}-{self.ranking}"
 
-    def get_audit_log_change_list(self):
-        log_entry = LogEntry.objects.filter(
-            content_type_id=ContentType.objects.get_for_model(self).pk,
-            object_id=self.id
-        )
-        changes = log_entry.values_list("change_message", flat=True)
-
-        return list(changes)
-
     def validate_unique_category_ranking(self):
         return self._meta.default_manager.filter(
             category=self.category,

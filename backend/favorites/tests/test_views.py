@@ -36,7 +36,7 @@ class TestFavoriteListCreate:
         assert favorite_data.get("title") == favorite.title
         assert favorite_data.get("ranking") == favorite.ranking
         assert not favorite_data.get("metadata")
-        assert favorite_data.get("logs") == [""]
+        assert favorite_data.get("logs") == []
 
     def test_post_favourites(self, user, auth_client):
         category = CategoryFactory()

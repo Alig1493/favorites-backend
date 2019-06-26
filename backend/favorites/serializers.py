@@ -1,3 +1,5 @@
+from django.contrib.admin.models import LogEntry, CHANGE
+from django.contrib.contenttypes.models import ContentType
 from rest_framework import serializers
 
 from .models import Category, Favorite
@@ -12,12 +14,23 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class FavoriteSerializer(serializers.ModelSerializer):
 
-    logs = serializers.JSONField(source="get_audit_log_change_list", read_only=True)
+    logs = serializers.SerializerMethodField(read_only=True)
     category = serializers.CharField(max_length=128)
 
     class Meta:
         model = Favorite
         exclude = ["user"]
+
+    def get_logs(self, instance):
+        log_entry = LogEntry.objects.filter(
+            action_flag=CHANGE,
+            content_type_id=ContentType.objects.get_for_model(instance).pk,
+            object_id=instance.id,
+            object_repr=instance.title,
+        )
+        changes = log_entry.values_list("change_message", flat=True)
+
+        return list(changes)
 
     def create(self, validated_data):
         category_title = validated_data.pop("category")
@@ -37,7 +50,7 @@ class CategorizedFavoriteSerializer(CategorySerializer):
     favorite_things = serializers.SerializerMethodField()
 
     class Meta(CategorySerializer.Meta):
-        fields = ["title", "favorite_things"]
+        fields = ["id", "title", "favorite_things"]
 
     def get_favorite_things(self, instance):
         user = self.context.get("request").user
