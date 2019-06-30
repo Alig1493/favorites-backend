@@ -38,16 +38,13 @@ panel are also being save in our currently used log entry model.)
 that was deployed using netlify and it enabled ssl over there.
 As a result we had to add a certificate in order to consume our backend 
 resources
-* Deployed link: https://13.235.4.179/
+* Deployed link: http://13.235.4.179/
 * Login credentials:
     * username: admin
     * password: admin12345
-* Opening the deployed link will give you a warning since 
-the ssl was added but it wasn't verified using a custom CNAME 
-domain.
 
 ### Example requests and responses
-``POST http://0.0.0.0:8000/api/v1/favorites/``
+``POST http://13.235.4.179/api/v1/favorites/``
 
 ``request data``
 ```json
@@ -75,7 +72,7 @@ domain.
 }
 ```
 
-``PUT http://0.0.0.0:8000/api/v1/favorites/1/``
+``PUT http://13.235.4.179/api/v1/favorites/1/``
 
 ``request data``
 ```json
@@ -105,7 +102,7 @@ domain.
 }
 ```
 
-``GET http://0.0.0.0:8000/api/v1/favorites/``
+``GET http://13.235.4.179/api/v1/favorites/``
 
 ``response``
 ```json
@@ -138,7 +135,7 @@ domain.
 ]
 ```
 
-``GET http://0.0.0.0:8000/api/v1/favorites/1/``
+``GET http://13.235.4.179/api/v1/favorites/1/``
 
 ``response``
 ```json
@@ -157,7 +154,7 @@ domain.
 }
 ```
 
-DOCUMENTATION: https://13.235.4.179/docs/
+DOCUMENTATION: http://13.235.4.179/docs/
 
 ## Docker compose commands to run project:
 Make sure you have docker and docker compose installed

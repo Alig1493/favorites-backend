@@ -185,4 +185,4 @@ ACCOUNT_LOGOUT_ON_GET = False
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = config("CORS_ORIGIN_WHITELIST",
-                               default="http://localhost:8080", cast=Csv())
+                               default="http://localhost:5000", cast=Csv())
