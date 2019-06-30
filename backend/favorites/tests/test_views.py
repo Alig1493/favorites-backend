@@ -1,10 +1,7 @@
-from datetime import timedelta
-
 import factory
 import pytest
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.urls import reverse
-from django.utils import timezone
 
 from backend.favorites.models import Favorite, Category
 from backend.favorites.tests.factories import FavoriteFactory, CategoryFactory
