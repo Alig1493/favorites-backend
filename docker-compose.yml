@@ -14,7 +14,7 @@ services:
       - ALLOWED_HOSTS=*
       - DEBUG=True
       - DATABASE_URL=postgres://backend:backend@db:5432/backend_database
-      - CORS_ORIGIN_WHITELIST="http://localhost:5000"
+      - CORS_ORIGIN_WHITELIST="http://localhost:8080"
     command: >
       bash -c "urlwait &&
                ./manage.py migrate &&

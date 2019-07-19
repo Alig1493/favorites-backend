@@ -33,7 +33,7 @@ changes and not having conflicts since changes made by the admin
 panel are also being save in our currently used log entry model.)
 
 ### Deployment
-* Deployed using [dokku](http://dokku.viewdocs.io/dokku/)
+* Deployed using [dokku](http://dokku.viewdocs.io/dokku/) on a remote AWS instance (nano)
 * Added ssl using dokku built in methods since our front end
 that was deployed using netlify and it enabled ssl over there.
 As a result we had to add a certificate in order to consume our backend 
