@@ -19,10 +19,10 @@ services:
       bash -c "urlwait &&
                ./manage.py migrate &&
                ./manage.py loaddata categories.json &&
-               ./manage.py runserver 0.0.0.0:8000"
+               ./manage.py runserver 0.0.0.0:8001"
 
     ports:
-      - "8000:8000"
+      - "8001:8001"
 
   db:
     image: postgres:10.1

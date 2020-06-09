@@ -13,6 +13,7 @@ import datetime
 import os
 
 import dj_database_url
+import django_heroku
 
 from decouple import config, Csv
 
@@ -186,3 +187,5 @@ ACCOUNT_LOGOUT_ON_GET = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = config("CORS_ORIGIN_WHITELIST",
                                default="http://localhost:5000", cast=Csv())
+
+django_heroku.settings(locals())
