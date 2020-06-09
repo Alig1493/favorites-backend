@@ -33,18 +33,14 @@ changes and not having conflicts since changes made by the admin
 panel are also being save in our currently used log entry model.)
 
 ### Deployment
-* Deployed using [dokku](http://dokku.viewdocs.io/dokku/) on a remote AWS instance (nano)
-* Added ssl using dokku built in methods since our front end
-that was deployed using netlify and it enabled ssl over there.
-As a result we had to add a certificate in order to consume our backend 
-resources
-* Deployed link: http://13.235.4.179/
+* Deployed using [heroku](https://dashboard.heroku.com/)
+* Deployed link: https://favourites-backend.herokuapp.com/
 * Login credentials:
     * username: admin
     * password: admin12345
 
 ### Example requests and responses
-``POST http://13.235.4.179/api/v1/favorites/``
+``POST https://favourites-backend.herokuapp.com/api/v1/favorites/``
 
 ``request data``
 ```json
@@ -72,7 +68,7 @@ resources
 }
 ```
 
-``PUT http://13.235.4.179/api/v1/favorites/1/``
+``PUT https://favourites-backend.herokuapp.com/api/v1/favorites/1/``
 
 ``request data``
 ```json
@@ -102,7 +98,7 @@ resources
 }
 ```
 
-``GET http://13.235.4.179/api/v1/favorites/``
+``GET https://favourites-backend.herokuapp.com/api/v1/favorites/``
 
 ``response``
 ```json
@@ -135,7 +131,7 @@ resources
 ]
 ```
 
-``GET http://13.235.4.179/api/v1/favorites/1/``
+``GET https://favourites-backend.herokuapp.com/api/v1/favorites/1/``
 
 ``response``
 ```json
@@ -154,7 +150,7 @@ resources
 }
 ```
 
-DOCUMENTATION: http://13.235.4.179/docs/
+DOCUMENTATION: https://favourites-backend.herokuapp.com/docs/
 
 ## Docker compose commands to run project:
 Make sure you have docker and docker compose installed
