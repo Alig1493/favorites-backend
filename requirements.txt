@@ -35,7 +35,7 @@ more-itertools==4.2.0
 oauthlib==2.0.7
 pluggy==0.6.0
 psycopg2==2.7.5
-py==1.5.4
+py==1.10.0
 pycodestyle==2.5.0
 pycparser==2.19
 pyflakes==2.1.1
